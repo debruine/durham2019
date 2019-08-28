@@ -21,7 +21,9 @@ library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 * [Data Transformation Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
 * [Stub script for this lesson](stubs/1_tidy.Rmd)
 
-## Load Data
+## Example
+
+### Load Data
 
 ```{r}
 disgust <- NULL
@@ -30,7 +32,6 @@ users <- NULL
 
 ```
 
-## Process data
 
 ### Merge tables
 
@@ -79,6 +80,94 @@ Or you can do this all in one step by [piping](https://psyteachr.github.io/msc-d
 
 ```{r}
 data <- NULL
+
+```
+
+## Tidying Functions
+
+```{r}
+# load the data
+ocean <- NULL
+```
+
+
+### gather()
+
+```{r}
+
+```
+
+### separate()
+
+```{r}
+
+```
+
+### spread()
+
+```{r}
+
+```
+
+### unite()
+
+```{r}
+
+```
+
+
+
+## Data Relations
+
+Below we create two small tables to practice joining data.
+
+```{r}
+subject <- tibble(
+  id = seq(1,5),
+  sex = c("m", "m", NA, "f", "f"),
+  age = c(19, 22, NA, 19, 18)
+)
+
+exp <- tibble(
+  id = c(2, 3, 4, 4, 5, 5, 6, 6, 7),
+  score = c(10, 18, 21, 23, 9, 11, 11, 12, 3)
+)
+```
+
+
+### left_join()
+
+```{r}
+
+```
+
+### right_join()
+
+```{r}
+
+```
+
+### inner_join()
+
+```{r}
+
+```
+
+### full_join()
+
+```{r}
+
+```
+
+### semi_join()
+
+```{r}
+
+```
+
+### anti_join()
+
+```{r}
 
 ```
 

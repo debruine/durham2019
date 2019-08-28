@@ -19,3 +19,86 @@ library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 * [Data Wrangling](https://psyteachr.github.io/msc-data-skills/dplyr.html) in Data Skills for Reproducible Science
 * [Data Transformation Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
 * [Stub script for this lesson](stubs/2_wrangling.Rmd)
+
+## 6 Main Verbs
+
+```{r}
+# load the data
+disgust <- NULL
+```
+
+### select()
+
+```{r}
+
+```
+
+### filter()
+
+```{r}
+
+```
+
+### Arrange
+
+```{r}
+
+```
+
+### mutate()
+
+```{r}
+
+```
+
+### summarise()
+
+```{r}
+
+```
+
+### group_by()
+
+```{r}
+
+```
+
+## Additional Verbs
+
+
+### rename()
+
+```{r}
+
+```
+
+### distinct()
+
+```{r}
+
+```
+
+### count()
+
+```{r}
+
+```
+
+### slice()
+
+```{r}
+
+```
+
+### pull()
+
+```{r}
+
+```
+
+
+
+
+
+
+

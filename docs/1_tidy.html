@@ -495,14 +495,14 @@ div.tocify {
 <li><a href="stubs/1_tidy.Rmd">Stub script for this lesson</a></li>
 </ul>
 </div>
-<div id="load-data" class="section level2">
-<h2>Load Data</h2>
+<div id="example" class="section level2">
+<h2>Example</h2>
+<div id="load-data" class="section level3">
+<h3>Load Data</h3>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">disgust &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">users &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
-<div id="process-data" class="section level2">
-<h2>Process data</h2>
 <div id="merge-tables" class="section level3">
 <h3>Merge tables</h3>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">joined_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
@@ -533,6 +533,55 @@ div.tocify {
 <h3>The Pipe</h3>
 <p>Or you can do this all in one step by <a href="https://psyteachr.github.io/msc-data-skills/tidyr.html#pipes">piping</a>. The pipe sends the results of the last function to the first argument of the next function. Remember to remove the first argument of the function when converting from separate functions to piped functions.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+</div>
+</div>
+<div id="tidying-functions" class="section level2">
+<h2>Tidying Functions</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># load the data</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">ocean &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div id="gather" class="section level3">
+<h3>gather()</h3>
+</div>
+<div id="separate" class="section level3">
+<h3>separate()</h3>
+</div>
+<div id="spread" class="section level3">
+<h3>spread()</h3>
+</div>
+<div id="unite" class="section level3">
+<h3>unite()</h3>
+</div>
+</div>
+<div id="data-relations" class="section level2">
+<h2>Data Relations</h2>
+<p>Below we create two small tables to practice joining data.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">subject &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;f&quot;</span>),</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">22</span>, <span class="ot">NA</span>, <span class="dv">19</span>, <span class="dv">18</span>)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">exp &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">  <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">  <span class="dt">score =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">)</a></code></pre></div>
+<div id="left_join" class="section level3">
+<h3>left_join()</h3>
+</div>
+<div id="right_join" class="section level3">
+<h3>right_join()</h3>
+</div>
+<div id="inner_join" class="section level3">
+<h3>inner_join()</h3>
+</div>
+<div id="full_join" class="section level3">
+<h3>full_join()</h3>
+</div>
+<div id="semi_join" class="section level3">
+<h3>semi_join()</h3>
+</div>
+<div id="anti_join" class="section level3">
+<h3>anti_join()</h3>
 </div>
 </div>
 

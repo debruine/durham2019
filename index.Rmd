@@ -14,7 +14,7 @@
 
 ## Resources to Download
 
-* [Course materials](files/materials.zip) (data, images, stub scripts)
+* [Course materials](files/dataskills.zip) (data, images, stub scripts)
 * [RStudio IDE](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
 * [Data transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
 * [Data visualisation](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
