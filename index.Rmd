@@ -12,9 +12,11 @@
 * Thu 13.30-15.00: [Simulations](5_simulation.html) ([script](stubs/5_simulation.Rmd))
 * Thu 15.30-17.00: [Reproducible workflows](6_repro.html) ([script](stubs/6_repro.Rmd))
 
-## [Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+## Resources to Download
 
+* [Course materials](files/materials.zip) (data, images, stub scripts)
 * [RStudio IDE](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
 * [Data transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
 * [Data visualisation](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
 * [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+* [More Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
