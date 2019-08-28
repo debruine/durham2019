@@ -10,16 +10,23 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
 library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 ```
+
+## Resources
+
+* [Tidy Data](https://psyteachr.github.io/msc-data-skills/tidyr.html) in Data Skills for Reproducible Science
+* [Data Relations](https://psyteachr.github.io/msc-data-skills/joins.html) in Data Skills for Reproducible Science
+* [Data Transformation Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+* [Stub script for this lesson](stubs/1_tidy.Rmd)
 
 ## Load Data
 
 ```{r}
-disgust <- read_csv("data/disgust.csv")
+disgust <- NULL
 
-users <- read_csv("data/users.csv")
+users <- NULL
 
 ```
 
@@ -28,7 +35,7 @@ users <- read_csv("data/users.csv")
 ### Merge tables
 
 ```{r}
-joined_data <- left_join(disgust, users, by = "user_id")
+joined_data <- NULL
 ```
 
 ### Filter
@@ -36,7 +43,7 @@ joined_data <- left_join(disgust, users, by = "user_id")
 Select only rows where sex is either "male" or "female"
 
 ```{r}
-filtered_data <- filter(joined_data, sex %in% c("male", "female"))
+filtered_data <- NULL
 ```
 
 ### Wide to long format
@@ -44,7 +51,7 @@ filtered_data <- filter(joined_data, sex %in% c("male", "female"))
 Transform from 1 row per subject and 21 questions per row, to one question:subject per row
 
 ```{r}
-long_data <- gather(filtered_data, question, score, moral1:pathogen7)
+long_data <- NULL
 ```
 
 ### Separate a column
@@ -52,7 +59,7 @@ long_data <- gather(filtered_data, question, score, moral1:pathogen7)
 The new "question" column is n the format "domain#". Split thisinto two columns for "domain" and "n".
 
 ```{r}
-separated_data <- separate(long_data, question, c("domain", "n"), sep = -1)
+separated_data <- NULL
 ```
 
 ### Summarise
@@ -60,9 +67,9 @@ separated_data <- separate(long_data, question, c("domain", "n"), sep = -1)
 Group by domain and user_id to calculate the sum of the 7 items within each domain for each subject.
 
 ```{r}
-grouped_data <- group_by(separated_data, domain, user_id, sex)
+grouped_data <- NULL
 
-aggregated_data <- summarise(grouped_data, sum_score = sum(score, na.rm = FALSE))
+aggregated_data <- NULL
 
 ```
 
@@ -71,13 +78,7 @@ aggregated_data <- summarise(grouped_data, sum_score = sum(score, na.rm = FALSE)
 Or you can do this all in one step by [piping](https://psyteachr.github.io/msc-data-skills/tidyr.html#pipes). The pipe sends the results of the last function to the first argument of the next function. Remember to remove the first argument of the function when converting from separate functions to piped functions.
 
 ```{r}
-data <- left_join(disgust, users, by = "user_id") %>%
-  filter(sex %in% c("male", "female")) %>%
-  gather(question, score, moral1:pathogen7) %>%
-  separate(question, c("domain", "n"), sep = -1) %>%
-  group_by(domain, user_id, sex)  %>%
-  summarise(sum_score = sum(score, na.rm = FALSE)) %>%
-  ungroup()
+data <- NULL
 
 ```
 

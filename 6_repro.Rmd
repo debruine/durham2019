@@ -13,3 +13,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
 library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 ```
+
+## Resources
+
+* [Reproducible workflows](https://psyteachr.github.io/msc-data-skills/repro.html) in Data Skills for Reproducible Science
+* [R Markdown Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+* [Stub script for this lesson](stubs/6_repro.Rmd)

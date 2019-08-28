@@ -13,3 +13,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
 library(tidyverse) # loads packages for data manipulation (dplyr/tidyr) and visualisation (ggplot2)
 ```
+
+## Resources
+
+* [Data Visualisation](https://psyteachr.github.io/msc-data-skills/ggplot.html) in Data Skills for Reproducible Science
+* [Data Visualisation Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+* [Stub script for this lesson](stubs/3_viz.Rmd)

@@ -13,3 +13,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
 library(tidyverse) # loads packages for data manipulation (dplyr/tidyr) and iteration (purrr)
 ```
+
+## Resources
+
+* [Iteration and functions](https://psyteachr.github.io/msc-data-skills/func.html) ([script](stubs/4_iteration.Rmd)) in Data Skills for Reproducible Science
+* [purrr Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf)
+* [Stub script for this lesson](stubs/4_iteration.Rmd)

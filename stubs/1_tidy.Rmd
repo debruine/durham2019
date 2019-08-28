@@ -14,6 +14,13 @@ knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
 library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 ```
 
+## Resources
+
+* [Tidy Data](https://psyteachr.github.io/msc-data-skills/tidyr.html) in Data Skills for Reproducible Science
+* [Data Relations](https://psyteachr.github.io/msc-data-skills/joins.html) in Data Skills for Reproducible Science
+* [Data Transformation Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+* [Stub script for this lesson](stubs/1_tidy.Rmd)
+
 ## Load Data
 
 ```{r}

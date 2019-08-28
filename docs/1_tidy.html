@@ -486,50 +486,53 @@ div.tocify {
 </div>
 
 
+<div id="resources" class="section level2">
+<h2>Resources</h2>
+<ul>
+<li><a href="https://psyteachr.github.io/msc-data-skills/tidyr.html">Tidy Data</a> in Data Skills for Reproducible Science</li>
+<li><a href="https://psyteachr.github.io/msc-data-skills/joins.html">Data Relations</a> in Data Skills for Reproducible Science</li>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf">Data Transformation Cheatsheet</a></li>
+<li><a href="stubs/1_tidy.Rmd">Stub script for this lesson</a></li>
+</ul>
+</div>
 <div id="load-data" class="section level2">
 <h2>Load Data</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">disgust &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/disgust.csv&quot;</span>)</a>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">disgust &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">users &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/users.csv&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-3" data-line-number="3">users &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 <div id="process-data" class="section level2">
 <h2>Process data</h2>
 <div id="merge-tables" class="section level3">
 <h3>Merge tables</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">joined_data &lt;-<span class="st"> </span><span class="kw">left_join</span>(disgust, users, <span class="dt">by =</span> <span class="st">&quot;user_id&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">joined_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 <div id="filter" class="section level3">
 <h3>Filter</h3>
 <p>Select only rows where sex is either “male” or “female”</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">filtered_data &lt;-<span class="st"> </span><span class="kw">filter</span>(joined_data, sex <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">filtered_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 <div id="wide-to-long-format" class="section level3">
 <h3>Wide to long format</h3>
 <p>Transform from 1 row per subject and 21 questions per row, to one question:subject per row</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">long_data &lt;-<span class="st"> </span><span class="kw">gather</span>(filtered_data, question, score, moral1<span class="op">:</span>pathogen7)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">long_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 <div id="separate-a-column" class="section level3">
 <h3>Separate a column</h3>
 <p>The new “question” column is n the format “domain#”. Split thisinto two columns for “domain” and “n”.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">separated_data &lt;-<span class="st"> </span><span class="kw">separate</span>(long_data, question, <span class="kw">c</span>(<span class="st">&quot;domain&quot;</span>, <span class="st">&quot;n&quot;</span>), <span class="dt">sep =</span> <span class="dv">-1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">separated_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 <div id="summarise" class="section level3">
 <h3>Summarise</h3>
 <p>Group by domain and user_id to calculate the sum of the 7 items within each domain for each subject.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">grouped_data &lt;-<span class="st"> </span><span class="kw">group_by</span>(separated_data, domain, user_id, sex)</a>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">grouped_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">aggregated_data &lt;-<span class="st"> </span><span class="kw">summarise</span>(grouped_data, <span class="dt">sum_score =</span> <span class="kw">sum</span>(score, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>))</a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3">aggregated_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 <div id="the-pipe" class="section level3">
 <h3>The Pipe</h3>
 <p>Or you can do this all in one step by <a href="https://psyteachr.github.io/msc-data-skills/tidyr.html#pipes">piping</a>. The pipe sends the results of the last function to the first argument of the next function. Remember to remove the first argument of the function when converting from separate functions to piped functions.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="kw">left_join</span>(disgust, users, <span class="dt">by =</span> <span class="st">&quot;user_id&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(sex <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(question, score, moral1<span class="op">:</span>pathogen7) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">separate</span>(question, <span class="kw">c</span>(<span class="st">&quot;domain&quot;</span>, <span class="st">&quot;n&quot;</span>), <span class="dt">sep =</span> <span class="dv">-1</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(domain, user_id, sex)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">sum_score =</span> <span class="kw">sum</span>(score, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="st">  </span><span class="kw">ungroup</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
 </div>
 </div>
 

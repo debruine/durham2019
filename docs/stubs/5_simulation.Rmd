@@ -17,3 +17,9 @@ library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 #devtools::install_github("debruine/faux")
 #library(faux)
 ```
+
+## Resources
+
+* [Simulations](https://psyteachr.github.io/msc-data-skills/func.html) in Data Skills for Reproducible Science
+* [faux](https://debruine.github.io/faux/)
+* [Stub script for this lesson](stubs/5_simulation.Rmd)
