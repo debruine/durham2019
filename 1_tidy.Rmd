@@ -26,17 +26,19 @@ library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
 ### Load Data
 
 ```{r}
-disgust <- NULL
+disgust <- read_csv("data/disgust.csv")
 
-users <- NULL
+users <- read_csv("data/users.csv")
 
 ```
 
 
 ### Merge tables
 
+Write my notes here. Merge disgust and user tables to one table.
+
 ```{r}
-joined_data <- NULL
+joined_data <- left_join(disgust, users, by = "user_id")
 ```
 
 ### Filter
@@ -44,7 +46,7 @@ joined_data <- NULL
 Select only rows where sex is either "male" or "female"
 
 ```{r}
-filtered_data <- NULL
+filtered_data <- filter(joined_data, sex %in% c("male", "female"))
 ```
 
 ### Wide to long format
@@ -52,15 +54,21 @@ filtered_data <- NULL
 Transform from 1 row per subject and 21 questions per row, to one question:subject per row
 
 ```{r}
-long_data <- NULL
+long_data <- gather(filtered_data, 
+                    key = question, 
+                    value = score, 
+                    moral1:pathogen7)
 ```
 
 ### Separate a column
 
-The new "question" column is n the format "domain#". Split thisinto two columns for "domain" and "n".
+The new "question" column is n the format "domain#". Split this into two columns for "domain" and "n".
 
 ```{r}
-separated_data <- NULL
+separated_data <- separate(long_data,
+                           col = question,
+                           into = c("domain", "q_n"),
+                           sep = -1)
 ```
 
 ### Summarise
@@ -68,18 +76,36 @@ separated_data <- NULL
 Group by domain and user_id to calculate the sum of the 7 items within each domain for each subject.
 
 ```{r}
-grouped_data <- NULL
+grouped_data <- group_by(separated_data, user_id, sex, domain)
 
-aggregated_data <- NULL
+aggregated_data <- summarise(
+  grouped_data, 
+  mean_score = mean(score)
+)
+```
+
+### Long to Wide
+
+```{r}
+wide_data <- spread(aggregated_data, domain, mean_score)
 
 ```
+
+Now, save your script, restart R, and knit (or run) the whole script!
 
 ### The Pipe
 
 Or you can do this all in one step by [piping](https://psyteachr.github.io/msc-data-skills/tidyr.html#pipes). The pipe sends the results of the last function to the first argument of the next function. Remember to remove the first argument of the function when converting from separate functions to piped functions.
 
 ```{r}
-data <- NULL
+data <- left_join(disgust, users, by = "user_id") %>%
+  filter(sex %in% c("male","female")) %>%
+  gather(question, score, moral1:pathogen7) %>%
+  separate(question, c("domain", "q_n"), sep = -1) %>%
+  group_by(user_id, sex, domain) %>%
+  summarise(mean_score = mean(score)) %>%
+  spread(domain, mean_score) %>%
+  select(user_id, moral:sexual, user_sex = sex)
 
 ```
 
@@ -87,32 +113,41 @@ data <- NULL
 
 ```{r}
 # load the data
-ocean <- NULL
+ocean <- read_csv("data/personality.csv")
 ```
 
 
 ### gather()
 
 ```{r}
+ocean_gathered <- gather(ocean, question, score, Op1:Ex9)
 
+head(ocean_gathered)
+```
+
+### spread()
+
+```{r}
+ocean_spread <- spread(ocean_gathered, question, score)
 ```
 
 ### separate()
 
 ```{r}
 
-```
-
-### spread()
-
-```{r}
+ocean_sep <- separate(ocean_gathered, question, c("domain", "n"), sep = 2) %>%
+  separate(date, c("year", "month", "day"), sep = "-")
 
 ```
+
+
 
 ### unite()
 
-```{r}
+Convert year, month and day columns into a new column called `date` with the format "31/02/2019"
 
+```{r}
+ocean_unite <- unite(ocean_sep, date, day, month, year, sep = "/")
 ```
 
 
@@ -138,36 +173,50 @@ exp <- tibble(
 ### left_join()
 
 ```{r}
+left_join(exp, subject, by = "id")
 
+left_join(subject, exp, by = "id")
 ```
 
 ### right_join()
 
-```{r}
+Just a backwards left join. Only changes column order. Very seldom used.
 
+```{r}
+right_join(exp, subject, by = "id")
+
+right_join(subject, exp, by = "id")
 ```
 
 ### inner_join()
 
 ```{r}
+inner_join(exp, subject, by = "id")
 
+inner_join(subject, exp, by = "id")
 ```
 
 ### full_join()
 
 ```{r}
+full_join(exp, subject, by = "id")
 
+full_join(subject, exp, by = "id")
 ```
 
 ### semi_join()
 
 ```{r}
+semi_join(exp, subject, by = "id")
 
+semi_join(subject, exp, by = "id")
 ```
 
 ### anti_join()
 
 ```{r}
+anti_join(exp, subject, by = "id")
 
+anti_join(subject, exp, by = "id")
 ```
 

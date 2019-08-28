@@ -499,89 +499,214 @@ div.tocify {
 <h2>Example</h2>
 <div id="load-data" class="section level3">
 <h3>Load Data</h3>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">disgust &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">users &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">disgust &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/disgust.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   date = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">users &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/users.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   user_id = col_double(),
+##   sex = col_character(),
+##   birthday = col_date(format = &quot;&quot;)
+## )</code></pre>
 </div>
 <div id="merge-tables" class="section level3">
 <h3>Merge tables</h3>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">joined_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<p>Write my notes here. Merge disgust and user tables to one table.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">joined_data &lt;-<span class="st"> </span><span class="kw">left_join</span>(disgust, users, <span class="dt">by =</span> <span class="st">&quot;user_id&quot;</span>)</a></code></pre></div>
 </div>
 <div id="filter" class="section level3">
 <h3>Filter</h3>
 <p>Select only rows where sex is either “male” or “female”</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">filtered_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">filtered_data &lt;-<span class="st"> </span><span class="kw">filter</span>(joined_data, sex <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>, <span class="st">&quot;female&quot;</span>))</a></code></pre></div>
 </div>
 <div id="wide-to-long-format" class="section level3">
 <h3>Wide to long format</h3>
 <p>Transform from 1 row per subject and 21 questions per row, to one question:subject per row</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">long_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">long_data &lt;-<span class="st"> </span><span class="kw">gather</span>(filtered_data, </a>
+<a class="sourceLine" id="cb8-2" data-line-number="2">                    <span class="dt">key =</span> question, </a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">                    <span class="dt">value =</span> score, </a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">                    moral1<span class="op">:</span>pathogen7)</a></code></pre></div>
 </div>
 <div id="separate-a-column" class="section level3">
 <h3>Separate a column</h3>
-<p>The new “question” column is n the format “domain#”. Split thisinto two columns for “domain” and “n”.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">separated_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<p>The new “question” column is n the format “domain#”. Split this into two columns for “domain” and “n”.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">separated_data &lt;-<span class="st"> </span><span class="kw">separate</span>(long_data,</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">                           <span class="dt">col =</span> question,</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">                           <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;domain&quot;</span>, <span class="st">&quot;q_n&quot;</span>),</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">                           <span class="dt">sep =</span> <span class="dv">-1</span>)</a></code></pre></div>
 </div>
 <div id="summarise" class="section level3">
 <h3>Summarise</h3>
 <p>Group by domain and user_id to calculate the sum of the 7 items within each domain for each subject.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">grouped_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">aggregated_data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">grouped_data &lt;-<span class="st"> </span><span class="kw">group_by</span>(separated_data, user_id, sex, domain)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">aggregated_data &lt;-<span class="st"> </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">  grouped_data, </a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">  <span class="dt">mean_score =</span> <span class="kw">mean</span>(score)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">)</a></code></pre></div>
+</div>
+<div id="long-to-wide" class="section level3">
+<h3>Long to Wide</h3>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">wide_data &lt;-<span class="st"> </span><span class="kw">spread</span>(aggregated_data, domain, mean_score)</a></code></pre></div>
+<p>Now, save your script, restart R, and knit (or run) the whole script!</p>
 </div>
 <div id="the-pipe" class="section level3">
 <h3>The Pipe</h3>
 <p>Or you can do this all in one step by <a href="https://psyteachr.github.io/msc-data-skills/tidyr.html#pipes">piping</a>. The pipe sends the results of the last function to the first argument of the next function. Remember to remove the first argument of the function when converting from separate functions to piped functions.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="kw">left_join</span>(disgust, users, <span class="dt">by =</span> <span class="st">&quot;user_id&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(sex <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;male&quot;</span>,<span class="st">&quot;female&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">gather</span>(question, score, moral1<span class="op">:</span>pathogen7) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">separate</span>(question, <span class="kw">c</span>(<span class="st">&quot;domain&quot;</span>, <span class="st">&quot;q_n&quot;</span>), <span class="dt">sep =</span> <span class="dv">-1</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">group_by</span>(user_id, sex, domain) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean_score =</span> <span class="kw">mean</span>(score)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw">spread</span>(domain, mean_score) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="st">  </span><span class="kw">select</span>(user_id, moral<span class="op">:</span>sexual, <span class="dt">user_sex =</span> sex)</a></code></pre></div>
 </div>
 </div>
 <div id="tidying-functions" class="section level2">
 <h2>Tidying Functions</h2>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># load the data</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">ocean &lt;-<span class="st"> </span><span class="ot">NULL</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co"># load the data</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">ocean &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/personality.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   date = col_date(format = &quot;&quot;)
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
 <div id="gather" class="section level3">
 <h3>gather()</h3>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">ocean_gathered &lt;-<span class="st"> </span><span class="kw">gather</span>(ocean, question, score, Op1<span class="op">:</span>Ex9)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw">head</span>(ocean_gathered)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["user_id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["date"],"name":[2],"type":["date"],"align":["right"]},{"label":["question"],"name":[3],"type":["chr"],"align":["left"]},{"label":["score"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"0","2":"2006-03-23","3":"Op1","4":"3"},{"1":"1","2":"2006-02-08","3":"Op1","4":"6"},{"1":"2","2":"2005-10-24","3":"Op1","4":"6"},{"1":"5","2":"2005-12-07","3":"Op1","4":"6"},{"1":"8","2":"2006-07-27","3":"Op1","4":"6"},{"1":"108","2":"2006-02-28","3":"Op1","4":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
 </div>
-<div id="separate" class="section level3">
-<h3>separate()</h3>
 </div>
 <div id="spread" class="section level3">
 <h3>spread()</h3>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">ocean_spread &lt;-<span class="st"> </span><span class="kw">spread</span>(ocean_gathered, question, score)</a></code></pre></div>
+</div>
+<div id="separate" class="section level3">
+<h3>separate()</h3>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">ocean_sep &lt;-<span class="st"> </span><span class="kw">separate</span>(ocean_gathered, question, <span class="kw">c</span>(<span class="st">&quot;domain&quot;</span>, <span class="st">&quot;n&quot;</span>), <span class="dt">sep =</span> <span class="dv">2</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">separate</span>(date, <span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>), <span class="dt">sep =</span> <span class="st">&quot;-&quot;</span>)</a></code></pre></div>
 </div>
 <div id="unite" class="section level3">
 <h3>unite()</h3>
+<p>Convert year, month and day columns into a new column called <code>date</code> with the format “31/02/2019”</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">ocean_unite &lt;-<span class="st"> </span><span class="kw">unite</span>(ocean_sep, date, day, month, year, <span class="dt">sep =</span> <span class="st">&quot;/&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="data-relations" class="section level2">
 <h2>Data Relations</h2>
 <p>Below we create two small tables to practice joining data.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">subject &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>),</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  <span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;f&quot;</span>),</a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">22</span>, <span class="ot">NA</span>, <span class="dv">19</span>, <span class="dv">18</span>)</a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb9-7" data-line-number="7">exp &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
-<a class="sourceLine" id="cb9-8" data-line-number="8">  <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>),</a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">  <span class="dt">score =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb9-10" data-line-number="10">)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">subject &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="dt">id =</span> <span class="kw">seq</span>(<span class="dv">1</span>,<span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">  <span class="dt">sex =</span> <span class="kw">c</span>(<span class="st">&quot;m&quot;</span>, <span class="st">&quot;m&quot;</span>, <span class="ot">NA</span>, <span class="st">&quot;f&quot;</span>, <span class="st">&quot;f&quot;</span>),</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">  <span class="dt">age =</span> <span class="kw">c</span>(<span class="dv">19</span>, <span class="dv">22</span>, <span class="ot">NA</span>, <span class="dv">19</span>, <span class="dv">18</span>)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">exp &lt;-<span class="st"> </span><span class="kw">tibble</span>(</a>
+<a class="sourceLine" id="cb20-8" data-line-number="8">  <span class="dt">id =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">6</span>, <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb20-9" data-line-number="9">  <span class="dt">score =</span> <span class="kw">c</span>(<span class="dv">10</span>, <span class="dv">18</span>, <span class="dv">21</span>, <span class="dv">23</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb20-10" data-line-number="10">)</a></code></pre></div>
 <div id="left_join" class="section level3">
 <h3>left_join()</h3>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">left_join</span>(exp, subject, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[3],"type":["chr"],"align":["left"]},{"label":["age"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"10","3":"m","4":"22"},{"1":"3","2":"18","3":"NA","4":"NA"},{"1":"4","2":"21","3":"f","4":"19"},{"1":"4","2":"23","3":"f","4":"19"},{"1":"5","2":"9","3":"f","4":"18"},{"1":"5","2":"11","3":"f","4":"18"},{"1":"6","2":"11","3":"NA","4":"NA"},{"1":"6","2":"12","3":"NA","4":"NA"},{"1":"7","2":"3","3":"NA","4":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">left_join</span>(subject, exp, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"m","3":"19","4":"NA"},{"1":"2","2":"m","3":"22","4":"10"},{"1":"3","2":"NA","3":"NA","4":"18"},{"1":"4","2":"f","3":"19","4":"21"},{"1":"4","2":"f","3":"19","4":"23"},{"1":"5","2":"f","3":"18","4":"9"},{"1":"5","2":"f","3":"18","4":"11"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="right_join" class="section level3">
 <h3>right_join()</h3>
+<p>Just a backwards left join. Only changes column order. Very seldom used.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">right_join</span>(exp, subject, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[3],"type":["chr"],"align":["left"]},{"label":["age"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"NA","3":"m","4":"19"},{"1":"2","2":"10","3":"m","4":"22"},{"1":"3","2":"18","3":"NA","4":"NA"},{"1":"4","2":"21","3":"f","4":"19"},{"1":"4","2":"23","3":"f","4":"19"},{"1":"5","2":"9","3":"f","4":"18"},{"1":"5","2":"11","3":"f","4":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">right_join</span>(subject, exp, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"m","3":"22","4":"10"},{"1":"3","2":"NA","3":"NA","4":"18"},{"1":"4","2":"f","3":"19","4":"21"},{"1":"4","2":"f","3":"19","4":"23"},{"1":"5","2":"f","3":"18","4":"9"},{"1":"5","2":"f","3":"18","4":"11"},{"1":"6","2":"NA","3":"NA","4":"11"},{"1":"6","2":"NA","3":"NA","4":"12"},{"1":"7","2":"NA","3":"NA","4":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="inner_join" class="section level3">
 <h3>inner_join()</h3>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">inner_join</span>(exp, subject, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[3],"type":["chr"],"align":["left"]},{"label":["age"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"10","3":"m","4":"22"},{"1":"3","2":"18","3":"NA","4":"NA"},{"1":"4","2":"21","3":"f","4":"19"},{"1":"4","2":"23","3":"f","4":"19"},{"1":"5","2":"9","3":"f","4":"18"},{"1":"5","2":"11","3":"f","4":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">inner_join</span>(subject, exp, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"m","3":"22","4":"10"},{"1":"3","2":"NA","3":"NA","4":"18"},{"1":"4","2":"f","3":"19","4":"21"},{"1":"4","2":"f","3":"19","4":"23"},{"1":"5","2":"f","3":"18","4":"9"},{"1":"5","2":"f","3":"18","4":"11"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="full_join" class="section level3">
 <h3>full_join()</h3>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">full_join</span>(exp, subject, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[3],"type":["chr"],"align":["left"]},{"label":["age"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"10","3":"m","4":"22"},{"1":"3","2":"18","3":"NA","4":"NA"},{"1":"4","2":"21","3":"f","4":"19"},{"1":"4","2":"23","3":"f","4":"19"},{"1":"5","2":"9","3":"f","4":"18"},{"1":"5","2":"11","3":"f","4":"18"},{"1":"6","2":"11","3":"NA","4":"NA"},{"1":"6","2":"12","3":"NA","4":"NA"},{"1":"7","2":"3","3":"NA","4":"NA"},{"1":"1","2":"NA","3":"m","4":"19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">full_join</span>(subject, exp, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"m","3":"19","4":"NA"},{"1":"2","2":"m","3":"22","4":"10"},{"1":"3","2":"NA","3":"NA","4":"18"},{"1":"4","2":"f","3":"19","4":"21"},{"1":"4","2":"f","3":"19","4":"23"},{"1":"5","2":"f","3":"18","4":"9"},{"1":"5","2":"f","3":"18","4":"11"},{"1":"6","2":"NA","3":"NA","4":"11"},{"1":"6","2":"NA","3":"NA","4":"12"},{"1":"7","2":"NA","3":"NA","4":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="semi_join" class="section level3">
 <h3>semi_join()</h3>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">semi_join</span>(exp, subject, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"10"},{"1":"3","2":"18"},{"1":"4","2":"21"},{"1":"4","2":"23"},{"1":"5","2":"9"},{"1":"5","2":"11"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">semi_join</span>(subject, exp, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"2","2":"m","3":"22"},{"1":"3","2":"NA","3":"NA"},{"1":"4","2":"f","3":"19"},{"1":"5","2":"f","3":"18"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="anti_join" class="section level3">
 <h3>anti_join()</h3>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw">anti_join</span>(exp, subject, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["score"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"6","2":"11"},{"1":"6","2":"12"},{"1":"7","2":"3"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="kw">anti_join</span>(subject, exp, <span class="dt">by =</span> <span class="st">&quot;id&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["id"],"name":[1],"type":["int"],"align":["right"]},{"label":["sex"],"name":[2],"type":["chr"],"align":["left"]},{"label":["age"],"name":[3],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"m","3":"19"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 </div>
 
