@@ -1,3 +1,7 @@
+This site contains resources for Lisa DeBruine's sections of the University of Durham R Summer School, August 2829, 2019.
+
+The web pages are meant to start out as "stubs" with outlines but no code. We will fill them in over the course of the class and this web page will stand as a record of our class.
+
 ## Links
 
 * This page: https://debruine.github.io/durham2019/
