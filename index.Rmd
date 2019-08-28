@@ -1,0 +1,21 @@
+## Links
+
+* This page: https://debruine.github.com/durham2019/
+* Coursebook: https://psyteachr.github.io/msc-data-skills/
+* [Download Course Materials](https://debruine.github.com/durham2019/files/materials.zip)
+
+## Course Schedule
+
+* Wed 13.30-15.00: [Tidy Data](https://psyteachr.github.io/msc-data-skills/tidyr.html)/[Data Relations](https://psyteachr.github.io/msc-data-skills/joins.html) ([script](stubs/1_tidy.Rmd))
+* Wed 15.30-17.00: [Data Wrangling](https://psyteachr.github.io/msc-data-skills/dplyr.html) ([script](stubs/2_wrangling.Rmd))
+* Thu 09.00-10.30: [Visualisation with ggplot](https://psyteachr.github.io/msc-data-skills/ggplot.html) ([script](stubs/3_viz.Rmd))
+* Thu 11.00-12.30: [Iteration and functions](https://psyteachr.github.io/msc-data-skills/func.html) ([script](stubs/4_iteration.Rmd))
+* Thu 13.30-15.00: [Simulations](https://psyteachr.github.io/msc-data-skills/func.html) ([script](stubs/5_simulation.Rmd))
+* Thu 15.30-17.00: [Reproducible workflows](https://psyteachr.github.io/msc-data-skills/repro.html) ([script](stubs/6_repro.Rmd))
+
+## [Cheatsheets](https://www.rstudio.com/resources/cheatsheets/)
+
+* [RStudio IDE](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
+* [Data transformation](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+* [Data visualisation](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+* [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)

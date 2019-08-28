@@ -1,0 +1,77 @@
+---
+title: "Tidy Data/Data Relations"
+author: "Me"
+date: "28/08/2019"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
+library(tidyverse) # loads packages for data manipulation (dplyr/tidyr)
+```
+
+## Load Data
+
+```{r}
+disgust <- NULL
+
+users <- NULL
+
+```
+
+## Process data
+
+### Merge tables
+
+```{r}
+joined_data <- NULL
+```
+
+### Filter
+
+Select only rows where sex is either "male" or "female"
+
+```{r}
+filtered_data <- NULL
+```
+
+### Wide to long format
+
+Transform from 1 row per subject and 21 questions per row, to one question:subject per row
+
+```{r}
+long_data <- NULL
+```
+
+### Separate a column
+
+The new "question" column is n the format "domain#". Split thisinto two columns for "domain" and "n".
+
+```{r}
+separated_data <- NULL
+```
+
+### Summarise
+
+Group by domain and user_id to calculate the sum of the 7 items within each domain for each subject.
+
+```{r}
+grouped_data <- NULL
+
+aggregated_data <- NULL
+
+```
+
+### The Pipe
+
+Or you can do this all in one step by [piping](https://psyteachr.github.io/msc-data-skills/tidyr.html#pipes). The pipe sends the results of the last function to the first argument of the next function. Remember to remove the first argument of the function when converting from separate functions to piped functions.
+
+```{r}
+data <- NULL
+
+```
+

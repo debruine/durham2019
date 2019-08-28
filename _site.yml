@@ -1,0 +1,30 @@
+name: "durham2019"
+author: "Lisa DeBruine"
+output_dir: "docs"
+exclude: ["*.xls", "*.csv","*.R"]
+output:
+  html_document:
+    toc: true
+    toc_float: yes
+    toc_depth: 2
+    df_print: paged
+    theme: flatly
+    highlight: tango
+    css: style.css
+navbar:
+  title: "R Workshop"
+  right:
+  - text: "Schedule"  
+    menu: 
+    - text: "Tidy Data/Data Relations"
+      href: 1_tidy.html
+    - text: "Data Wrangling"
+      href: 2_wrangling.html
+    - text: "Data Visualisation"
+      href: 3_viz.html
+    - text: "Interation and Functions"
+      href: 4_iteration.html
+    - text: "Simulation"
+      href: 5_simulation.html
+    - text: "Reproducible Workflows"
+      href: 6_repro.html
