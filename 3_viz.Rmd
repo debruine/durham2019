@@ -1,6 +1,6 @@
 ---
 title: "Data Visualisation"
-author: "Me"
+author: "Lisa"
 date: "29/08/2019"
 output: 
   html_document:
@@ -12,6 +12,10 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = TRUE, message = TRUE)
 library(tidyverse) # loads packages for data manipulation (dplyr/tidyr) and visualisation (ggplot2)
+library(plotly)
+library(cowplot)
+
+theme_set(theme_minimal()) # set default theme for plots
 ```
 
 ## Resources
@@ -59,25 +63,43 @@ overplot <- tibble(
 ## geom_bar()
 
 ```{r}
-
+ggplot(pets, aes(x = pet, fill = pet)) +
+  geom_bar(color = "grey", size = 2, show.legend = FALSE)
 ```
 
 ## geom_histogram()
 
 ```{r}
-
+ggplot(pet_happy, aes(x = age)) +
+  geom_histogram(binwidth = 1,
+                 fill = "white",
+                 color = "grey")
 ```
 
 ## geom_density()
 
 ```{r}
+ggplot(x_vs_y) +
+  geom_density(aes(x = x), color = "red") +
+  geom_density(aes(x = y), color = "blue")
+```
 
+
+```{r}
+x_vs_y %>%
+  gather(xy, value, x, y) %>%
+  ggplot(aes(x = value, fill = xy)) +
+  geom_density(alpha = 0.5)
 ```
 
 ## geom_freqpoly()
 
-```{r}
-
+```{r, fig.width = 2, fig.height=3, fig.align="center", fig.cap="histogram plus freqpoly"}
+ggplot(pet_happy, aes(x = age)) +
+  geom_histogram(binwidth = 1,
+                 fill = "white",
+                 color = "grey") +
+  geom_freqpoly(binwidth = 1)
 ```
 
 
@@ -85,30 +107,106 @@ overplot <- tibble(
 ## geom_violin()
 
 ```{r}
-
+ggplot(pet_happy, aes(x = pet, y = happiness, fill = pet, color = pet)) +
+  geom_violin() +
+  scale_fill_manual(values = c("green", "purple"),
+                    labels = c("Cats", "Dogs"),
+                    name = "Type of Pet") +
+  scale_color_manual(values = c("palevioletred2", "dodgerblue"),
+                    labels = c("Cats", "Dogs"),
+                    name = "Type of Pet")
 ```
 
 ## geom_boxplot()
 
 ```{r}
-
+ggplot(pet_happy, aes(x = pet, y = happiness, color = pet)) +
+  geom_violin(show.legend = FALSE) +
+  geom_boxplot(aes(fill = pet), color = "grey30", width = 0.3) +
+  coord_flip()
 ```
 
-## geom_col()
-
-```{r}
-
-```
 
 ## geom_point()
 
 ```{r}
-
+ggplot(x_vs_y, aes(x = x, y = y)) +
+  geom_point(shape = 0) +
+  labs(x = "Sunshine",
+       y = "Happiness",
+       title = "Sunshine vs Happiness")
 ```
 
 ## geom_smooth()
 
 ```{r}
+g <- ggplot(pet_happy, aes(x = age, y = happiness, 
+                      color = pet, linetype = pet)) +
+  geom_point() +
+  geom_smooth(method = lm, se = TRUE)
+
+ggplotly(g)
+```
+
+```{r}
+ggplot(overlap, aes(x, y)) +
+  geom_point(size = 5, alpha = .05)
+```
+
+```{r}
+ggplot(overlap, aes(x, y)) +
+  geom_bin2d(binwidth = 1, drop = FALSE) +
+  scale_fill_viridis_c(option = "viridis")
+```
+
+```{r}
+ggplot(overlap, aes(x, y)) +
+  geom_count()
+```
+
+```{r}
+ggplot(overplot, aes(x, y)) +
+  geom_density_2d()
+```
+
+```{r}
+ggplot(overplot, aes(x, y)) +
+  stat_density_2d(aes(fill = ..level..), geom = "polygon") +
+  scale_fill_viridis_c()
+```
+
+
+## Multiple Plots
+
+Make each individual plot
+
+```{r}
+g <- ggplot(pet_happy, aes(x = pet, y = happiness, fill = pet)) +
+  scale_fill_manual(values = c("green", "purple"))
+
+boxplot <- g + geom_boxplot(show.legend = FALSE)
+
+violinplot <- g + geom_violin(show.legend = FALSE)
+
+violinbox <- g + geom_violin(show.legend = FALSE, fill = "white") +
+  geom_boxplot(show.legend = FALSE, width = 0.3)
+
+ggsave("images/boxplot.png", boxplot, width = 5, height = 3, dpi = 300)
+
+```
+
+
+```{r}
+
+cowplot::plot_grid(boxplot, violinplot, violinbox, 
+                   nrow = 1,
+                   labels = c("A", "B", "C")
+                   )
+
+ggsave("images/cowplot.jpg", 
+       width = 5,
+       height = 3, 
+       dpi = 300)
 
 ```
 
