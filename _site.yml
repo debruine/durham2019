@@ -6,11 +6,10 @@ output:
   html_document:
     toc: true
     toc_float: yes
-    toc_depth: 2
+    toc_depth: 3
     df_print: paged
     theme: flatly
     highlight: tango
-    css: style.css
 navbar:
   title: "R Workshop"
   right:
