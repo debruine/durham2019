@@ -23,6 +23,7 @@ theme_set(theme_minimal()) # set default theme for plots
 * [Data Visualisation](https://psyteachr.github.io/msc-data-skills/ggplot.html) in Data Skills for Reproducible Science
 * [Data Visualisation Cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
 * [Stub script for this lesson](stubs/3_viz.Rmd)
+* [Plot Demo Shiny App](http://shiny.psy.gla.ac.uk/debruine/plotdemo/)
 
 
 The code below creates a few data files for our examples.

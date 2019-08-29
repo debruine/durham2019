@@ -10,10 +10,11 @@ The web pages are meant to start out as "stubs" with outlines but no code. We wi
 ## Course Schedule
 
 * Wed 13.30-15.00: [Tidy Data/Data Relations](1_tidy.html) ([script](stubs/1_tidy.Rmd))
-* Wed 15.30-17.00: [Data Wrangling](2_wrangling.html) ([script](stubs/2_wrangling.Rmd))
-* Thu 09.00-10.30: [Data Visualisation](3_viz.html) ([script](stubs/3_viz.Rmd))
-* Thu 11.00-12.30: [Iteration and functions](4_iteration.html) ([script](stubs/4_iteration.Rmd))
-* Thu 13.30-15.00: [Simulations](5_simulation.html) ([script](stubs/5_simulation.Rmd))
+* Wed 15.30-17.00: [Tidy Data/Data Relations](1_tidy.html) ([script](stubs/1_tidy.Rmd))
+* Thu 09.00-10.30: [Data Wrangling](2_wrangling.html)
+
+* Thu 11.00-12.30: [Data Visualisation](3_viz.html) ([script](stubs/3_viz.Rmd))
+* Thu 13.30-15.00: [Data Visualisation](3_viz.html) ([script](stubs/3_viz.Rmd))
 * Thu 15.30-17.00: [Reproducible workflows](6_repro.html) ([script](stubs/6_repro.Rmd))
 
 ## Resources to Download
